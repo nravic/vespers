@@ -2,7 +2,7 @@
 /* eslint-disable no-tabs */
 /* eslint-disable require-jsdoc */
 
-import React, {Component, useCallback, useEffect, useState} from 'react';
+import React, {Component} from 'react';
 import {useDropzone} from 'react-dropzone';
 import IPFS from 'ipfs';
 import Web3 from 'web3';
@@ -14,22 +14,16 @@ import IpfsStorageContract from './contracts/IpfsStorage.json';
 const getWeb3 = require('./getWeb3');
 
 export interface appState {
-	storageValue: number,
+	selectedFile: any,
 	web3: any,
 	accounts: any,
 	contract: any,
 }
 
 class App extends Component {
-	node: any;
-	state: appState;
+	  state = {selectedFile: null, web3: null, accounts: null, contract: null};
 
-	constructor(props: any) {
-	  super(props);
-	  this.state = {storageValue: 0, web3: null, accounts: null, contract: null};
-	}
-
-	async componentDidMount() {
+	  async componentDidMount() {
 	  try {
 	    const web3: Web3 = await getWeb3();
 	    const accounts = await web3.eth.getAccounts();
@@ -45,23 +39,23 @@ class App extends Component {
 	  } catch (error) {
 		  console.log('Failed to load web3, accounts, or contract.');
 	  }
-	}
+	  }
 
-	private async initIpfs() {
+	  private async initIpfs() {
 	  this.node = await IPFS.create();
 	  const version = await this.node.version();
 	  console.log('IPFS Node Version:', version.version);
-	}
+	  }
 
-	private async setFile(hash: any) {
+	  private async setFile(hash: any) {
 	  const ipfsWithSigner = ipfsContract.connect(defaultProvider.getSigner());
 	  const tx = await ipfsWithSigner.setFile(hash);
 	  console.log({tx});
 
 	  setIpfsHash(hash);
-	}
+	  }
 
-	render() {
+	  render() {
 	  if (!this.state.web3) {
 	    return <div>Loading Web3, accounts, and contract...</div>;
 	  }
@@ -96,7 +90,7 @@ class App extends Component {
 	      </header>
 	    </div>
 	  );
-	}
+	  }
 }
 export default App;
 

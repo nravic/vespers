@@ -1,3 +1,4 @@
+/* eslint-disable brace-style */
 import Web3 from 'web3';
 
 const getWeb3 = () =>
