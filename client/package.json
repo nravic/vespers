@@ -11,11 +11,18 @@
     "react-scripts": "^4.0.3",
     "web3": "^1.7.0"
   },
+  "engines": {
+    "node": "14.18.0"
+  },
+  "resolutions": {
+    "react-error-overlay": "6.0.9"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "preinstall": "npx npm-force-resolutions"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -42,6 +49,8 @@
     "@typescript-eslint/parser": "^5.12.1",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-react": "^7.28.0",
+    "ipfs-core": "^0.14.1",
+    "react-error-overlay": "^6.0.9",
     "truffle": "^5.1.67",
     "ts-node": "^10.5.0",
     "typechain": "^7.0.0",

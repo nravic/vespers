@@ -3,95 +3,117 @@
 /* eslint-disable require-jsdoc */
 
 import React, {Component} from 'react';
-import {useDropzone} from 'react-dropzone';
-import IPFS from 'ipfs';
+import * as IPFS from 'ipfs-core';
 import Web3 from 'web3';
-import {addresses, abis} from '@project/contracts';
 import './App.css';
-import internal from 'stream';
 import IpfsStorageContract from './contracts/IpfsStorage.json';
 
-const getWeb3 = require('./getWeb3');
-
+import getWeb3 from './getWeb3';
 export interface appState {
-	selectedFile: any,
-	web3: any,
-	accounts: any,
-	contract: any,
+  selectedFile: any;
+  web3: any;
+  accounts: any;
+  contract: any;
 }
 
 class App extends Component {
-	  state = {selectedFile: null, web3: null, accounts: null, contract: null};
+  node: any;
+  state = {
+    selectedFile: null,
+    web3: null,
+    accounts: null,
+    contract: null,
+    ipfsHash: null,
+  };
 
-	  async componentDidMount() {
-	  try {
-	    const web3: Web3 = await getWeb3();
-	    const accounts = await web3.eth.getAccounts();
-	    const networkId = await web3.eth.net.getId();
-	    const deployedNetwork = (IpfsStorageContract as any).networks[networkId];
+  async componentDidMount() {
+    try {
+      const web3: Web3 = await getWeb3();
+      const accounts = await web3.eth.getAccounts();
+      const networkId = await web3.eth.net.getId();
+      const deployedNetwork = (IpfsStorageContract as any).networks[networkId];
 
-	    const instance = new web3.eth.Contract(
-	        (IpfsStorageContract.abi as any), // typings here are ?? TBD
-	        deployedNetwork && deployedNetwork.address,
-	    );
+      const instance = new web3.eth.Contract(
+        IpfsStorageContract.abi as any, // typings here are ?? TBD
+        deployedNetwork && deployedNetwork.address,
+      );
 
-	    this.setState({web3, accounts, contract: instance});
-	  } catch (error) {
-		  console.log('Failed to load web3, accounts, or contract.');
-	  }
-	  }
+	  await this.initIpfs();
 
-	  private async initIpfs() {
-	  this.node = await IPFS.create();
-	  const version = await this.node.version();
-	  console.log('IPFS Node Version:', version.version);
-	  }
+      this.setState(
+		  {web3, accounts, contract: instance, ipfsState: null});
+    } catch (error) {
+      console.log('Failed to load web3, accounts, contract, or ipfs node.');
+    }
+  }
 
-	  private async setFile(hash: any) {
-	  const ipfsWithSigner = ipfsContract.connect(defaultProvider.getSigner());
-	  const tx = await ipfsWithSigner.setFile(hash);
-	  console.log({tx});
+  private async initIpfs() {
+    this.node = await IPFS.create();
+    const version = await this.node.version();
+    console.log('IPFS Node Version:', version.version);
+  }
 
-	  setIpfsHash(hash);
-	  }
+  private onFileChange(event: any) {
+    this.setState({selectedFile: event.target.files[0]});
+  }
 
-	  render() {
-	  if (!this.state.web3) {
-	    return <div>Loading Web3, accounts, and contract...</div>;
-	  }
+  private async onFileUpload() {
+	  const formData = new FormData();
+	  formData.append('myfile', this.state.selectedFile!);
+
+	  const ipfsHash = await this.node.add(
+		  {
+          path: (this.state.selectedFile as any).name,
+		  content: this.state.selectedFile,
+        });
+
+    this.setState({ipfsHash});
+
+    await (this.state.contract as any).methods.setFile();
+  }
+
+  private fileData() {
+    if (this.state.selectedFile) {
 	  return (
-	    <div className="App">
-	      <header className="App-header">
-	        <div {...getRootProps()} style={{cursor: 'pointer'}}>
-	          <img src={} className="App-logo" alt="react-logo" />
-	          <input {...getInputProps()} />
-	          {isDragActive ? (
-							<p>Drop the files here ...</p>
-						) : (
-							<p>
-								Drag and drop some files here to upload to IPFS (or click the
-								logo)
-							</p>
-						)}
-	        </div>
-	        <div>
-	          {ipfsHash !== '' ? (
-							<a
-							  href={`https://ipfs.io/ipfs/${ipfsHash}`}
-							  target="_blank"
-							  rel="noopener noreferrer"
-							>
-								See current user file
-							</a>
-						) : (
-							'No user file set yet'
-						)}
-	        </div>
-	      </header>
-	    </div>
+        <div>
+		  <h2>File Details:</h2>
+
+          <p>IPFS Hash: {this.state.ipfsHash}</p>
+
+        </div>
 	  );
-	  }
+    } else {
+	  return (
+        <div>
+		  <br />
+		  <h4>Upload a file</h4>
+        </div>
+	  );
+    }
+  };
+
+  render() {
+    if (!this.state.web3) {
+      return <div>Loading Web3, accounts, and contract...</div>;
+    }
+    return (
+      <div>
+        <h1>
+			Vespers
+        </h1>
+        <h3>
+		  Blast file all over twitter.
+        </h3>
+        <div>
+          <input type="file" onChange={this.onFileChange} />
+          <button onClick={this.onFileUpload}>
+			  Upload!
+          </button>
+        </div>
+	  {this.fileData()}
+      </div>
+    );
+  }
 }
+
 export default App;
-
-
