@@ -8,7 +8,7 @@ Vespers aims to help out in situations where mass social media is inaccessible d
 
 Upload image (react client) -> generate IPFS hash -> eth smart contract stores hash -> Twitter bot.
 
-We assume that communication is possible w/ the IPFS node/s. That end of things is highly customizable however, and we want to offer maximum customizability so you can get it out regardless of how strict the censorship is.
+We assume that communication is possible w/ the IPFS node/s. That end of things is highly customizable however, and we want to offer maximum customizability so you can get your media out regardless of how strict the censorship is.
 
 ## Todo
 
@@ -17,3 +17,5 @@ This project is still an MVP and needs a bunch of work. Only making this public 
 - Twitter tx scan bot
 - testing
 - adding more info into smart contract?
+- support text input
+- donations for fee support
