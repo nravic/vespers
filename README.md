@@ -1,6 +1,6 @@
 # Vespers
 
-(Project is still MVP!)
+(Project is still a WIP!)
 
 Vespers aims to help out in situations where mass social media is inaccessible due to ISP/government firewalls by helping you broadcast media (currently an image) onto twitter account/s tied to whoever's deployed this project. 
 
@@ -12,7 +12,7 @@ We assume that communication is possible w/ the IPFS node/s. That end of things 
 
 ## Todo
 
-This project is still an MVP and needs a bunch of work. Only making this public to get an idea from people if it's worth pursuing. As a result, lots to do.
+This project is still a WIP and needs a bunch of work. Only making this public to get an idea from people if it's worth pursuing. As a result, lots to do.
 
 - Twitter tx scan bot
 - testing
