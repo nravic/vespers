@@ -5,6 +5,7 @@
   "dependencies": {
     "crypto-browserify": "^3.12.0",
     "ipfs": "^0.62.1",
+    "multiformats": "^9.6.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-dropzone": "^12.0.4",

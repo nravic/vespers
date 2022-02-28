@@ -7,7 +7,6 @@ import * as IPFS from 'ipfs-core';
 import Web3 from 'web3';
 import './App.css';
 import IpfsStorageContract from './contracts/IpfsStorage.json';
-
 import getWeb3 from './getWeb3';
 export interface appState {
   selectedFile: any;
@@ -61,15 +60,19 @@ class App extends Component {
 	  const formData = new FormData();
 	  formData.append('myfile', this.state.selectedFile!);
 
-	  const ipfsHash = await this.node.add(
+	  const {cid} = await this.node.add(
 		  {
           path: (this.state.selectedFile as any).name,
 		  content: this.state.selectedFile,
         });
 
+    const ipfsHash = cid.toString();
     this.setState({ipfsHash});
 
-    await (this.state.contract as any).methods.setFile();
+    await (this.state.contract as any).
+        methods.
+        setFile(ipfsHash).
+        send({from: this.state.accounts![0]});
   }
 
   private fileData() {
@@ -94,7 +97,9 @@ class App extends Component {
 
   render() {
     if (!this.state.web3) {
-      return <div>Loading Web3, accounts, and contract...</div>;
+      return <div>Loading Web3, accounts, and contract.
+		  Make sure you are logged into Metamask.
+	  </div>;
     }
     return (
       <div>
@@ -102,11 +107,12 @@ class App extends Component {
 			Vespers
         </h1>
         <h3>
-		  Blast file all over twitter.
+		  Basic censorship resistance/bypass through IPFS and twitter. <br />
+		  Source @ github.com/nravic/vespers
         </h3>
         <div>
-          <input type="file" onChange={this.onFileChange} />
-          <button onClick={this.onFileUpload}>
+          <input type="file" onChange={this.onFileChange.bind(this)} />
+          <button onClick={this.onFileUpload.bind(this)}>
 			  Upload!
           </button>
         </div>
