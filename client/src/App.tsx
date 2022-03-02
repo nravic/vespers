@@ -37,10 +37,10 @@ class App extends Component {
         deployedNetwork && deployedNetwork.address,
       );
 
-	  await this.initIpfs();
+      await this.initIpfs();
 
       this.setState(
-		  {web3, accounts, contract: instance, ipfsState: null});
+          {web3, accounts, contract: instance, ipfsState: null});
     } catch (error) {
       console.log('Failed to load web3, accounts, contract, or ipfs node.');
     }
@@ -57,13 +57,13 @@ class App extends Component {
   }
 
   private async onFileUpload() {
-	  const formData = new FormData();
-	  formData.append('myfile', this.state.selectedFile!);
+    const formData = new FormData();
+    formData.append('myfile', this.state.selectedFile!);
 
-	  const {cid} = await this.node.add(
-		  {
+    const {cid} = await this.node.add(
+        {
           path: (this.state.selectedFile as any).name,
-		  content: this.state.selectedFile,
+          content: this.state.selectedFile,
         });
 
     const ipfsHash = cid.toString();
@@ -77,46 +77,46 @@ class App extends Component {
 
   private fileData() {
     if (this.state.selectedFile) {
-	  return (
+      return (
         <div>
-		  <h2>File Details:</h2>
+          <h2>File Details:</h2>
 
           <p>IPFS Hash: {this.state.ipfsHash}</p>
 
         </div>
-	  );
+      );
     } else {
-	  return (
+      return (
         <div>
-		  <br />
-		  <h4>Upload a file</h4>
+          <br />
+          <h4>Upload a file</h4>
         </div>
-	  );
+      );
     }
   };
 
   render() {
     if (!this.state.web3) {
-      return <div>Loading Web3, accounts, and contract.
-		  Make sure you are logged into Metamask.
-	  </div>;
+      return <div>Loading Web3, accounts, and contract. <br />
+        Make sure you are logged into Metamask.
+      </div>;
     }
     return (
       <div>
         <h1>
-			Vespers
+          Vespers
         </h1>
         <h3>
-		  Basic censorship resistance/bypass through IPFS and twitter. <br />
-		  Source @ github.com/nravic/vespers
+          Basic censorship resistance/bypass through IPFS and twitter. <br />
+          Source @ github.com/nravic/vespers
         </h3>
         <div>
           <input type="file" onChange={this.onFileChange.bind(this)} />
           <button onClick={this.onFileUpload.bind(this)}>
-			  Upload!
+            Upload!
           </button>
         </div>
-	  {this.fileData()}
+        {this.fileData()}
       </div>
     );
   }

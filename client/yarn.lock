@@ -12189,7 +12189,7 @@
     "buffer" "^5.6.0"
     "varint" "^5.0.0"
 
-"multiformats@^9.0.0", "multiformats@^9.0.2", "multiformats@^9.0.4", "multiformats@^9.1.0", "multiformats@^9.1.2", "multiformats@^9.4.2", "multiformats@^9.4.5", "multiformats@^9.4.7", "multiformats@^9.5.1", "multiformats@^9.5.4":
+"multiformats@^9.0.0", "multiformats@^9.0.2", "multiformats@^9.0.4", "multiformats@^9.1.0", "multiformats@^9.1.2", "multiformats@^9.4.2", "multiformats@^9.4.5", "multiformats@^9.4.7", "multiformats@^9.5.1", "multiformats@^9.5.4", "multiformats@^9.6.4":
   "integrity" "sha512-fCCB6XMrr6CqJiHNjfFNGT0v//dxOBMrOMqUIzpPc/mmITweLEyhvMpY9bF+jZ9z3vaMAau5E8B68DW77QMXkg=="
   "resolved" "https://registry.npmjs.org/multiformats/-/multiformats-9.6.4.tgz"
   "version" "9.6.4"
@@ -14600,9 +14600,9 @@
     "prop-types" "^15.8.1"
 
 "react-error-overlay@^6.0.9":
-  "integrity" "sha512-mKR90fX7Pm5seCOfz8q9F+66VCc1PGsWSBxKbITjfKVQHMNF2zudxHnMdJiB1fRCb+XsbQV9sO9DCkgsMQgBIA=="
-  "resolved" "https://registry.npmjs.org/react-error-overlay/-/react-error-overlay-6.0.10.tgz"
-  "version" "6.0.10"
+  "integrity" "sha512-nQTTcUu+ATDbrSD1BZHr5kgSD4oF8OFjxun8uAaL8RwPBacGBNPf/yAuVVdx17N8XNzRDMrZ9XcKZHCjPW+9ew=="
+  "resolved" "https://registry.npmjs.org/react-error-overlay/-/react-error-overlay-6.0.9.tgz"
+  "version" "6.0.9"
 
 "react-is@^16.13.1":
   "integrity" "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
